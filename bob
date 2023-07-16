@@ -1,0 +1,9 @@
+"react-native-builder-bob": {
+  "source": "src",
+  "output": "lib",
+  "targets": [
+    ["commonjs", {"copyFlow": true}],
+    "module",
+    "typescript",
+  ]
+}

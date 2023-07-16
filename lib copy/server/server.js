@@ -1,9 +1,13 @@
 import express from "express";
 import ReactDOMServer from "react-dom/server";
 import { AppRegistry } from 'react-native-web';
-import App from "../commonjs/App";
+// import App from "../commonjs/App";
+// import About from "../commonjs/About";
+import App from "../module/App";
+import About from "../module/About";
 const app = express();
 
+//!App
 app.get('/', (req, res) => {
 AppRegistry.registerComponent('ssr', () => App);
 const { element, getStyleElement } = AppRegistry.getApplication('ssr');
@@ -15,17 +19,38 @@ const document = `
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 ${css}
-<body style="height:100%; overflow-y:hidden">
+<body onclick="location = 'http://localhost:3005/about' " style="height:100%; overflow-y:hidden">
 <div id="root" style="display:flex; height: 100%">
 ${html}
 </div>
 `
 res.send(document)
 });
-app.listen(3005, () => {console.log("App is launched")});
+//!App
 
+//!About
+app.get('/about', (req, res) => {
+  AppRegistry.registerComponent('ssr', () => About);
+  const { element, getStyleElement } = AppRegistry.getApplication('ssr');
+  const html = ReactDOMServer.renderToString(element);
+  const css = ReactDOMServer.renderToStaticMarkup(getStyleElement());
+  const document = `
+  <!DOCTYPE html>
+  <html style="height:100%">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  ${css}
+  <body style="height:100%; overflow-y:hidden">
+  <div onclick="location = 'http://localhost:3005/' " id="root" style="display:flex; height: 100%">
+  ${html}
+  </div>
+  `
+  res.send(document)
+  });
+  app.listen(3005, () => {console.log("App is launched")});
+//!About
 
-
+  
 
 
 

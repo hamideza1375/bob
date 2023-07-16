@@ -4,6 +4,6 @@
   "targets": [
     ["commonjs", {"copyFlow": true}],
     "module",
-    "typescript",
+    "typescript"
   ]
 }
